@@ -247,7 +247,7 @@ main {
 }
 .panel h2,
 .panel-head h2 {
-  font-size: 13px;
+  font-size: 15px;
   margin: 0;
   display: flex;
   align-items: center;
@@ -262,9 +262,10 @@ main {
 .tag {
   background: #ecfdf5;
   color: #047857;
-  border-radius: 6px;
+  border-radius: 20px;
   padding: 5px;
-  font-size: 9px;
+  font-size: 12px;
+  border: 2px solid;
 }
 .legend {
   display: flex;
