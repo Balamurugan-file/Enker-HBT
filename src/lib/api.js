@@ -2,6 +2,8 @@ const API_URL = import.meta.env.VITE_GOOGLE_SCRIPT_URL || '';
 const TOKEN_KEY = 'habit-tracker-token';
 const USER_KEY = 'habit-tracker-user';
 
+let statusSaveQueue = Promise.resolve();
+
 export function getToken() { return localStorage.getItem(TOKEN_KEY) || ''; }
 export function getCurrentUser() {
   try { return JSON.parse(localStorage.getItem(USER_KEY) || 'null'); } catch { return null; }
@@ -70,7 +72,21 @@ export async function deleteHabitRemote(id) {
   return Boolean(result.ok);
 }
 
-export async function saveStatus({habitId, habitName, date, status}) {
-  const result = await request('setStatus', {habitId, habitName, date, status});
-  return Boolean(result.ok);
+
+export function saveStatus({ habitId, habitName, date, status }) {
+  const saveTask = statusSaveQueue
+    .catch(() => {})
+    .then(() =>
+      request('setStatus', {
+        habitId,
+        habitName,
+        date,
+        status,
+      })
+    );
+
+  statusSaveQueue = saveTask;
+
+  return saveTask.then(result => Boolean(result.ok));
 }
+
