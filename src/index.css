@@ -263,9 +263,10 @@ main {
   background: #ecfdf5;
   color: #047857;
   border-radius: 20px;
+  border: 2px solid;
   padding: 5px;
   font-size: 12px;
-  border: 2px solid;
+  font-weight: bolder;
 }
 .legend {
   display: flex;
